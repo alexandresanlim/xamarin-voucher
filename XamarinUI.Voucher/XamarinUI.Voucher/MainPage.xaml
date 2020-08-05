@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="clr-namespace:XamarinUI.Voucher.Controls" xmlns:local="clr-namespace:XamarinUI.Voucher"
+             mc:Ignorable="d"
+             x:Class="XamarinUI.Voucher.MainPage"
+             BackgroundColor="{StaticResource primaryDark}"
+             >
+
+    <ContentPage.BindingContext>
+        <local:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+
+        <StackLayout>
+
+
+            <StackLayout Spacing="0">
+
+                <StackLayout.Padding>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="25,50,25,15" />
+                        <On Platform="Android" Value="25,35,25,15" />
+                    </OnPlatform>
+                </StackLayout.Padding>
+
+                <StackLayout>
+                    <controls:CustomLabel Text="Balance" FontSize="Title" TextColor="{StaticResource secondary}" FontAttributes="Bold"/>
+                </StackLayout>
+
+
+                <StackLayout Orientation="Horizontal">
+                    <controls:CustomLabel Text="{Binding CurrentBalance, Mode=TwoWay}" FontSize="30" FontAttributes="Bold" TextColor="{StaticResource secondary}" HorizontalOptions="Center" />
+                    <controls:CustomFrame HorizontalOptions="EndAndExpand" BackgroundColor="Black" CornerRadius="20" Padding="10">
+                        <controls:CustomFrame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SetNewVoucherCommand}" />
+                        </controls:CustomFrame.GestureRecognizers>
+
+                        <Label Text="+ Add" TextColor="{StaticResource secondary}" FontAttributes="Bold" Margin="30,0" />
+                    </controls:CustomFrame>
+                </StackLayout>
+            </StackLayout>
+
+
+            <controls:CustomFrame BackgroundColor="{StaticResource primary}" CornerRadius="35,35,0,0" Padding="25,25,25,0">
+                <CollectionView ItemsSource="{Binding Vouchers}">
+
+                    <!--<CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"/>
+                </CollectionView.ItemsLayout>-->
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Margin="0,0,0,5" Spacing="0">
+                                <Grid>
+
+                                    <controls:CustomFrame CornerRadius="10" BackgroundColor="{StaticResource secondary}" Padding="15">
+                                        <StackLayout>
+                                            <Grid Padding="15,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackLayout Grid.Column="0">
+                                                    <controls:CustomLabel Text="{Binding ValidAtPresentation, StringFormat='Valid at {0}'}" FontAttributes="Bold" />
+                                                    <StackLayout Orientation="Horizontal" Spacing="0">
+                                                        <controls:CustomLabel FontSize="Medium" Text="{Binding Value.CurrencySymbol}" VerticalOptions="EndAndExpand" FontAttributes="Bold" Margin="0,0,5,5"  />
+                                                        <controls:CustomLabel FontSize="34" FontAttributes="Bold" Text="{Binding Value.ValueFromTypePresentation}" TextColor="{StaticResource textPrimary}" />
+                                                        <controls:CustomLabel FontSize="Small" Text="{Binding Value.PercentMsg}" VerticalOptions="EndAndExpand" FontAttributes="Bold" Margin="5,0,0,5"  />
+                                                    </StackLayout>
+
+                                                </StackLayout>
+                                                <StackLayout Grid.Column="1">
+                                                    <controls:CustomLabel Text="{Binding Emoji}" TextColor="{StaticResource textPrimary}" FontAttributes="Bold" FontSize="50"/>
+                                                </StackLayout>
+                                            </Grid>
+
+                                        </StackLayout>
+                                    </controls:CustomFrame>
+                                    <controls:CustomFrame CornerRadius="10" BackgroundColor="#99000000" IsVisible="{Binding IsExpired}">
+                                        <controls:CustomLabel Text="Expired" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" />
+                                    </controls:CustomFrame>
+                                </Grid>
+
+                               
+                           
+                                <Grid>
+                                    <StackLayout BackgroundColor="{StaticResource secondary}" Margin="10,0">
+                                        <controls:CustomLabel TextColor="#50000000" Text=" ..................................................................... " HorizontalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+                                    <StackLayout BackgroundColor="#99000000" IsVisible="{Binding IsExpired}" Margin="10,0">
+                                        <controls:CustomLabel TextColor="#50000000" Text=" ...................................................................... " HorizontalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                    
+                                </Grid>
+                                 
+                                    
+                              
+
+                                <Grid>
+                                    <controls:CustomFrame CornerRadius="10" BackgroundColor="{StaticResource secondary}" Padding="15">
+                                        <controls:CustomLabel Text="Use in your next order on Company Name" HorizontalOptions="CenterAndExpand" />
+                                    </controls:CustomFrame>
+
+                                    <controls:CustomFrame CornerRadius="10" BackgroundColor="#99000000" Padding="15" IsVisible="{Binding IsExpired}" />
+                                </Grid>
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </controls:CustomFrame>
+
+
+
+
+
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
